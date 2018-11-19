@@ -1,5 +1,5 @@
-var { expect, forEach } = require('chai');
-var { Shop, Item } = require('../src/gilded_rose.js');
+const { expect } = require('chai');
+const { Shop, Item } = require('../src/gilded_rose.js');
 describe('Gilded Rose', () => {
   describe('Normal Item', () => {
     it('should decrease quality and sellIn by 1', () => {
