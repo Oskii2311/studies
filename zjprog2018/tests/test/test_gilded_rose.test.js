@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const { Shop, Item } = require('../src/gilded_rose.js');
+
 describe('Gilded Rose', () => {
   describe('Normal Item', () => {
     it('should decrease quality and sellIn by 1', () => {
@@ -11,7 +12,7 @@ describe('Gilded Rose', () => {
       expect(item[0].sellIn).to.equal(11);
     });
 
-    it('should decrease quality by 2 if sellin is above 0', function() {
+    it('should decrease quality by 2 if sellin is above 0', () => {
       const gildedRose = new Shop([new Item('normal item', -1, 50)]);
 
       const items = gildedRose.updateQuality();
@@ -109,7 +110,7 @@ describe('Gilded Rose', () => {
         expect(items[0].quality).to.equal(11);
       });
 
-      it('should doesnt increase quality more than 50', function() {
+      it('should doesnt increase quality higer than 50', () => {
         const gildedRose = new Shop([new Item(agedBrieItem, 5, 50)]);
 
         const items = gildedRose.updateQuality();
