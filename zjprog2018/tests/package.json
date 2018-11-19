@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "gilded rose kata in javascript",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha ",
+    "test:watch": "mocha --watch ./test ./"
   },
   "repository": {
     "type": "git",
