@@ -23,7 +23,7 @@ describe('Gilded Rose', () => {
       new Item(backstageItem, 12, 5),
       new Item(Sulfuras, 12, 5)
     ]);
-    const expetedValues = [
+    const EXPECTED_VALUES = [
       {
         name: 'normal item',
         quality: 4,
@@ -53,7 +53,7 @@ describe('Gilded Rose', () => {
 
     const item = gildedRose.updateQuality();
 
-    expetedValues.forEach(({ quality, sellIn, name }, index) => {
+    EXPECTED_VALUES.forEach(({ quality, sellIn, name }, index) => {
       expect(item[index].name).to.equal(name);
       expect(item[index].quality).to.equal(quality);
       expect(item[index].sellIn).to.equal(sellIn);
@@ -90,45 +90,54 @@ describe('Gilded Rose', () => {
   });
 
   describe('Backstage Item', () => {
-    it('should increase quality of backstage by 1 if day to sellin is 10 or higher', () => {
-      const gildedRose = new Shop([new Item(backstageItem, 12, 1)]);
-
-      const item = gildedRose.updateQuality();
-
-      expect(item[0].quality).to.equal(2);
-      expect(item[0].sellIn).to.equal(11);
-    });
-
-    it('should increase quality of backstage by 2 if day to sellin is beetwen 9 and 5', () => {
-      let items;
-      let quality = 1;
-      let sellIn = 10;
-      const multipler = 2;
-      for (let i = 10; i > 5; i--) {
-        let gildedRose = new Shop([new Item(backstageItem, sellIn, quality)]);
-        items = gildedRose.updateQuality();
-
-        expect(items[0].sellIn).to.equal(sellIn - 1);
-        expect(items[0].quality).to.equal(quality + multipler);
-        quality += multipler;
-        sellIn -= 1;
+    const GIVEN_VALUES = [
+      {
+        name: backstageItem,
+        given: {
+          quality: 14,
+          sellIn: 15
+        },
+        multipler: 1,
+        end: 10
+      },
+      {
+        name: backstageItem,
+        given: {
+          quality: 33,
+          sellIn: 10
+        },
+        multipler: 2,
+        end: 5
+      },
+      {
+        name: backstageItem,
+        given: {
+          quality: 11,
+          sellIn: 5
+        },
+        multipler: 3,
+        end: 0
       }
-    });
+    ];
 
-    it('should increase quality of backstage by 3 if day to sellin is beetwen 4 and 0', () => {
-      let items;
-      let quality = 1;
-      let sellIn = 5;
-      const multipler = 3;
-      for (let i = 5; i > 0; i--) {
-        let gildedRose = new Shop([new Item(backstageItem, sellIn, quality)]);
-        items = gildedRose.updateQuality();
+    GIVEN_VALUES.forEach(({ name, given, multipler, end }) => {
+      it(`should increase quality of ${name} by ${multipler}
+      if day to sellin is beetwen ${given.sellIn - 1} and ${end}`, () => {
+        let items;
+        let gildedRose;
 
-        expect(items[0].sellIn).to.equal(sellIn - 1);
-        expect(items[0].quality).to.equal(quality + multipler);
-        quality += multipler;
-        sellIn -= 1;
-      }
+        for (given.sellIn; given.sellIn > end; given.sellIn--) {
+          gildedRose = new Shop([
+            new Item(backstageItem, given.sellIn, given.quality)
+          ]);
+
+          items = gildedRose.updateQuality();
+          given.quality += multipler;
+
+          expect(items[0].sellIn).to.equal(given.sellIn - 1);
+          expect(items[0].quality).to.equal(given.quality);
+        }
+      });
     });
 
     it('should set quality at 0 if sellIn is below 0', () => {
