@@ -25,27 +25,27 @@ describe('Gilded Rose', () => {
     ]);
     const expetedValues = [
       {
-        label: 'normal item',
+        name: 'normal item',
         quality: 4,
         sellIn: 11
       },
       {
-        label: 'conjured',
+        name: 'conjured',
         quality: 3,
         sellIn: 11
       },
       {
-        label: agedBrieItem,
+        name: agedBrieItem,
         quality: 6,
         sellIn: 11
       },
       {
-        label: backstageItem,
+        name: backstageItem,
         quality: 6,
         sellIn: 11
       },
       {
-        label: Sulfuras,
+        name: Sulfuras,
         quality: 5,
         sellIn: 12
       }
@@ -53,7 +53,8 @@ describe('Gilded Rose', () => {
 
     const item = gildedRose.updateQuality();
 
-    expetedValues.forEach(({ quality, sellIn }, index) => {
+    expetedValues.forEach(({ quality, sellIn, name }, index) => {
+      expect(item[index].name).to.equal(name);
       expect(item[index].quality).to.equal(quality);
       expect(item[index].sellIn).to.equal(sellIn);
     });
