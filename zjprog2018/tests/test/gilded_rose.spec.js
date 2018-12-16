@@ -1,20 +1,11 @@
 const { expect } = require('chai');
-const { Shop, Item } = require('../src/gilded_rose.js');
+const { Shop } = require('../src/gilded_rose.js');
+const { Item } = require('../src/item')
 
 describe('Gilded Rose', () => {
   const agedBrieItem = 'Aged Brie';
   const backstageItem = 'Backstage passes to a TAFKAL80ETC concert';
   const Sulfuras = 'Sulfuras, Hand of Ragnaros';
-
-  it('Should use null as 0', () => {
-    const gildedRose = new Shop([new Item('null', null, null)]);
-
-    const item = gildedRose.updateQuality();
-
-    expect(item[0].quality).to.equal(null);
-    expect(item[0].sellIn).to.equal(-1);
-  });
-
   it('Should correctly update value for array of items', () => {
     const gildedRose = new Shop([
       new Item('normal item', 12, 5),
@@ -148,7 +139,7 @@ describe('Gilded Rose', () => {
       expect(item[0].quality).to.equal(0);
       expect(item[0].sellIn).to.equal(-1);
     });
-
+  });
     describe('Sulfuras', () => {
       it('Should never decrease quality and sellIn', () => {
         const gildedRose = new Shop([new Item(Sulfuras, 3, 2)]);
@@ -188,10 +179,8 @@ describe('Gilded Rose', () => {
         const gildedRose = new Shop([new Item('conjured', 15, 23)]);
 
         const items = gildedRose.updateQuality();
-
         expect(items[0].sellIn).to.equal(14);
         expect(items[0].quality).to.equal(21);
       });
     });
-  });
 });
