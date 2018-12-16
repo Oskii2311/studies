@@ -6,8 +6,8 @@ class AgedBrieItem extends ExtendedItem {
       }
 
       updateMyself() {
-            this.quality = this.increase(this.quality, 1)
-            this.sellIn = this.decrease(this.sellIn, 1)
+            this.increaseQuality(1)
+            this.decreaseSellIn(1)
       }
 }
 

@@ -1,4 +1,4 @@
-const { ExtendedItem } = require('./ExtendedItem')
+const { ExtendedItem } = require('./extendedItem')
 
 class ConjuredItem extends ExtendedItem {
     constructor(name, sellIn, quality) {
@@ -6,8 +6,9 @@ class ConjuredItem extends ExtendedItem {
       }
 
       updateMyself() {
-        this.sellIn = this.decrease(this.sellIn, 1)
-        this.quality = (this.sellIn < 0 ) ? this.decreaseQuality(this.quality, 4) : this.decreaseQuality(this.quality, 2);
+        this.decreaseSellIn(1);
+
+        (this.sellIn < 0 ) ? this.decreaseQuality(4) : this.decreaseQuality(2);
       }
 }
 

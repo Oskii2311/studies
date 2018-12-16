@@ -6,8 +6,8 @@ class NormalItem extends ExtendedItem {
       }
 
       updateMyself() {
-        this.sellIn = this.decrease(this.sellIn, 1)
-        this.quality = (this.sellIn < 0 ) ? this.decreaseQuality(this.quality, 2) : this.decreaseQuality(this.quality, 1);
+        this.decreaseSellIn(1);
+        (this.sellIn < 0 ) ? this.decreaseQuality(2) : this.decreaseQuality(1);
       }
 }
 

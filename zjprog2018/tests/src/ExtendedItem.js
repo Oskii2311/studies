@@ -1,27 +1,26 @@
-const { Item } = require('./item')
+const { Item } = require('../src/item')
 
 class ExtendedItem extends Item {
     constructor(name, sellIn, quality) {
         super(name, sellIn, quality);
       }
-        decreaseQuality(quality, number) {
-            const result = this.decrease(quality, number);
-            if(result < 0) {
-              return 0;
+        decreaseQuality(number) {
+            this.quality = this.quality -number;
+            if(this.quality < 0) {
+              this.quality= 0;
             }
-            return result
           }
         
-          decrease(value, number) {
-            return value - number;
+          decreaseSellIn(number) {
+            this.sellIn = this.sellIn - number;
           }
-        
-          increase(value, number) {
-            const result = value + number;
-            if(result >= 50) {
-              return 50
+
+          increaseQuality(number) {
+            this.quality =this.quality +number;
+            if( this.quality >= 50) {
+              this.quality =  50
             }
-            return result;
+
           }
 }
 

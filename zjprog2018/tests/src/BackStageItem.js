@@ -7,17 +7,25 @@ class BackStageItem extends ExtendedItem {
 
       updateMyself() {
         if(this.sellIn > 10) {
-           this.quality = this.increase(this.quality, 1)
-          } else if(this.sellIn <= 10 && this.sellIn >5) {
-            this.quality = this.increase(this.quality, 2)
+           this.increaseQuality(1)
+          } else if(this.isBeetwen10and6()) {
+            this.increaseQuality(2)
         }else {
-            this.quality = this.increase(this.quality, 3)
+            this.increaseQuality(3)
         }
-          this.sellIn = this.decrease(this.sellIn, 1)
+        this.decreaseSellIn(1)
           if(this.sellIn < 0 ) {
             this.quality = 0;
           }
       }
+      
+      isBeetwen10and6() {
+        if(this.sellIn <= 10 && this.sellIn >5){
+          return true;
+        }
+        return false;
+      }
+
 }
 
 module.exports = {
