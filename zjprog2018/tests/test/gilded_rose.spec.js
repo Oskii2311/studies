@@ -1,42 +1,51 @@
 const { expect } = require('chai');
 const { Shop } = require('../src/gilded_rose.js');
-const { Item } = require('../src/item')
+const { BackStageItem } = require('../src/BackStageItem')
+const { AgedBrieItem } = require('../src/AgedBrieItem')
+const {ConjuredItem} = require('../src/ConjuredItem')
+const {NormalItem} = require('../src/NormalItem')
+const {SulfurasItem} = require('../src/SulfurasItem')
+const {
+  CONJURED,
+  BACKSTAGE,
+  AGED_BRIE,
+  SULFARAS,
+  NORMAL_ITEM
+} = require('../src/constants/special_items_types')
+
 
 describe('Gilded Rose', () => {
-  const agedBrieItem = 'Aged Brie';
-  const backstageItem = 'Backstage passes to a TAFKAL80ETC concert';
-  const Sulfuras = 'Sulfuras, Hand of Ragnaros';
   it('Should correctly update value for array of items', () => {
     const gildedRose = new Shop([
-      new Item('normal item', 12, 5),
-      new Item('conjured', 12, 5),
-      new Item(agedBrieItem, 12, 5),
-      new Item(backstageItem, 12, 5),
-      new Item(Sulfuras, 12, 5)
+      new NormalItem(NORMAL_ITEM, 12, 5),
+      new ConjuredItem(CONJURED, 12, 5),
+      new AgedBrieItem(AGED_BRIE, 12, 5),
+      new BackStageItem(BACKSTAGE, 12, 5),
+      new SulfurasItem(SULFARAS, 12, 5)
     ]);
     const EXPECTED_VALUES = [
       {
-        name: 'normal item',
+        name: NORMAL_ITEM,
         quality: 4,
         sellIn: 11
       },
       {
-        name: 'conjured',
+        name: CONJURED,
         quality: 3,
         sellIn: 11
       },
       {
-        name: agedBrieItem,
+        name: AGED_BRIE,
         quality: 6,
         sellIn: 11
       },
       {
-        name: backstageItem,
+        name: BACKSTAGE,
         quality: 6,
         sellIn: 11
       },
       {
-        name: Sulfuras,
+        name: SULFARAS,
         quality: 5,
         sellIn: 12
       }
@@ -53,7 +62,7 @@ describe('Gilded Rose', () => {
 
   describe('Normal Item', () => {
     it('Should decrease quality and sellIn by 1', () => {
-      const gildedRose = new Shop([new Item('normal item', 12, 1)]);
+      const gildedRose = new Shop([new NormalItem(NORMAL_ITEM, 12, 1)]);
 
       const item = gildedRose.updateQuality();
 
@@ -62,7 +71,7 @@ describe('Gilded Rose', () => {
     });
 
     it('Should decrease quality by 2 if sellin is above 0', () => {
-      const gildedRose = new Shop([new Item('normal item', -1, 50)]);
+      const gildedRose = new Shop([new NormalItem(NORMAL_ITEM, -1, 50)]);
 
       const items = gildedRose.updateQuality();
 
@@ -71,7 +80,7 @@ describe('Gilded Rose', () => {
     });
 
     it('Should not decrease quality below zero', () => {
-      const gildedRose = new Shop([new Item('normal item', 6, 0)]);
+      const gildedRose = new Shop([new NormalItem(NORMAL_ITEM, 6, 0)]);
 
       const item = gildedRose.updateQuality();
 
@@ -83,7 +92,7 @@ describe('Gilded Rose', () => {
   describe('Backstage Item', () => {
     const GIVEN_VALUES = [
       {
-        name: backstageItem,
+        name: BACKSTAGE,
         given: {
           quality: 14,
           sellIn: 15
@@ -92,7 +101,7 @@ describe('Gilded Rose', () => {
         end: 10
       },
       {
-        name: backstageItem,
+        name: BACKSTAGE,
         given: {
           quality: 33,
           sellIn: 10
@@ -101,7 +110,7 @@ describe('Gilded Rose', () => {
         end: 5
       },
       {
-        name: backstageItem,
+        name: BACKSTAGE,
         given: {
           quality: 11,
           sellIn: 5
@@ -119,7 +128,7 @@ describe('Gilded Rose', () => {
 
         for (given.sellIn; given.sellIn > end; given.sellIn--) {
           gildedRose = new Shop([
-            new Item(backstageItem, given.sellIn, given.quality)
+            new BackStageItem(BACKSTAGE, given.sellIn, given.quality)
           ]);
 
           items = gildedRose.updateQuality();
@@ -132,7 +141,7 @@ describe('Gilded Rose', () => {
     });
 
     it('Should set quality at 0 if sellIn is below 0', () => {
-      const gildedRose = new Shop([new Item(backstageItem, 0, 50)]);
+      const gildedRose = new Shop([new BackStageItem(BACKSTAGE, 0, 50)]);
 
       const item = gildedRose.updateQuality();
 
@@ -142,7 +151,7 @@ describe('Gilded Rose', () => {
   });
     describe('Sulfuras', () => {
       it('Should never decrease quality and sellIn', () => {
-        const gildedRose = new Shop([new Item(Sulfuras, 3, 2)]);
+        const gildedRose = new Shop([new SulfurasItem(SULFARAS, 3, 2)]);
 
         let items;
         for (let i = 0; i <= 5; i++) {
@@ -156,7 +165,7 @@ describe('Gilded Rose', () => {
 
     describe('Aged Brie', () => {
       it('Should increase quality by 1 and decrease sellIn by 1', () => {
-        const gildedRose = new Shop([new Item(agedBrieItem, 5, 10)]);
+        const gildedRose = new Shop([new AgedBrieItem(AGED_BRIE, 5, 10)]);
 
         const items = gildedRose.updateQuality();
 
@@ -165,7 +174,7 @@ describe('Gilded Rose', () => {
       });
 
       it('Should doesnt increase quality higer than 50', () => {
-        const gildedRose = new Shop([new Item(agedBrieItem, 5, 50)]);
+        const gildedRose = new Shop([new AgedBrieItem(AGED_BRIE, 5, 50)]);
 
         const items = gildedRose.updateQuality();
 
@@ -176,11 +185,19 @@ describe('Gilded Rose', () => {
 
     describe('Conjured', () => {
       it('Should decrease quality of conjured items by 2', () => {
-        const gildedRose = new Shop([new Item('conjured', 15, 23)]);
+        const gildedRose = new Shop([new ConjuredItem('conjured', 15, 23)]);
 
         const items = gildedRose.updateQuality();
         expect(items[0].sellIn).to.equal(14);
         expect(items[0].quality).to.equal(21);
+      });
+
+      it('Should decrease quality of conjured items by 4 if sellIn is below 0', () => {
+        const gildedRose = new Shop([new ConjuredItem('conjured', 0, 23)]);
+
+        const items = gildedRose.updateQuality();
+        expect(items[0].sellIn).to.equal(-1);
+        expect(items[0].quality).to.equal(19);
       });
     });
 });
