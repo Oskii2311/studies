@@ -1,18 +1,17 @@
 const { expect } = require('chai');
 const { Shop } = require('../src/gilded_rose.js');
-const { BackStageItem } = require('../src/BackStageItem')
-const { AgedBrieItem } = require('../src/AgedBrieItem')
-const { ConjuredItem } = require('../src/ConjuredItem')
-const { NormalItem } = require('../src/NormalItem')
-const { SulfurasItem } = require('../src/SulfurasItem')
+const { BackStageItem } = require('../src/BackStageItem');
+const { AgedBrieItem } = require('../src/AgedBrieItem');
+const { ConjuredItem } = require('../src/ConjuredItem');
+const { NormalItem } = require('../src/NormalItem');
+const { SulfurasItem } = require('../src/SulfurasItem');
 const {
   CONJURED,
   BACKSTAGE,
   AGED_BRIE,
   SULFARAS,
   NORMAL_ITEM
-} = require('../src/constants/special_items_types')
-
+} = require('../src/constants/special_items_types');
 
 describe('Gilded Rose', () => {
   it('Should correctly update value for array of items', () => {
@@ -123,21 +122,21 @@ describe('Gilded Rose', () => {
     GIVEN_VALUES.forEach(({ name, given, multipler, end }) => {
       it(`Should increase quality of ${name} by ${multipler}
       if sellin is between ${given.sellIn - 1} and ${end}`, () => {
-          let items;
-          let gildedRose;
+        let items;
+        let gildedRose;
 
-          for (given.sellIn; given.sellIn > end; given.sellIn--) {
-            gildedRose = new Shop([
-              new BackStageItem(BACKSTAGE, given.sellIn, given.quality)
-            ]);
+        for (given.sellIn; given.sellIn > end; given.sellIn--) {
+          gildedRose = new Shop([
+            new BackStageItem(BACKSTAGE, given.sellIn, given.quality)
+          ]);
 
-            items = gildedRose.updateQuality();
-            given.quality += multipler;
+          items = gildedRose.updateQuality();
+          given.quality += multipler;
 
-            expect(items[0].sellIn).to.equal(given.sellIn - 1);
-            expect(items[0].quality).to.equal(given.quality);
-          }
-        });
+          expect(items[0].sellIn).to.equal(given.sellIn - 1);
+          expect(items[0].quality).to.equal(given.quality);
+        }
+      });
     });
 
     it('Should set quality at 0 if sellIn is below 0', () => {

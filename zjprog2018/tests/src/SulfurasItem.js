@@ -1,14 +1,13 @@
-const { ExtendedItem } = require('./ExtendedItem')
+const { ExtendedItem } = require('./ExtendedItem');
 
 class SulfurasItem extends ExtendedItem {
-    constructor(name, sellIn, quality) {
-        super(name, sellIn, quality);
-    }
+  constructor(name, sellIn, quality) {
+    super(name, sellIn, quality);
+  }
 
-    updateMyself() {
-    }
+  updateMyself() {}
 }
 
 module.exports = {
-    SulfurasItem
+  SulfurasItem
 };
