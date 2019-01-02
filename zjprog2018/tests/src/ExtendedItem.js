@@ -1,10 +1,6 @@
-const { Item } = require('../src/item');
+const { Item } = require('../src/Item');
 
 class ExtendedItem extends Item {
-  constructor(name, sellIn, quality) {
-    super(name, sellIn, quality);
-  }
-
   decreaseQuality(number) {
     this.quality = this.quality - number;
     if (this.quality < 0) {

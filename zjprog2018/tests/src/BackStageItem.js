@@ -1,10 +1,6 @@
 const { ExtendedItem } = require('./ExtendedItem');
 
 class BackStageItem extends ExtendedItem {
-  constructor(name, sellIn, quality) {
-    super(name, sellIn, quality);
-  }
-
   updateMyself() {
     if (this.sellIn > 10) {
       this.increaseQuality(1);

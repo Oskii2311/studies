@@ -1,4 +1,4 @@
-class Shop {
+class GildedRose {
   constructor(items = []) {
     this.items = items;
   }
@@ -12,5 +12,5 @@ class Shop {
 }
 
 module.exports = {
-  Shop
+  GildedRose
 };
